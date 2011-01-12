@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="XenofoxAnonymousPosting" title="[Xenofox] Anonymous Posting" version_string="0.1" version_id="1" url="" install_callback_class="Xenofox_AnonymousPosting_Install_Base" install_callback_method="install" uninstall_callback_class="Xenofox_AnonymousPosting_Install_Base" uninstall_callback_method="uninstall">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates/>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="load_class_controller" execute_order="10" callback_class="Xenofox_AnonymousPosting_Listener_LoadClassController" callback_method="loadClassListener" active="1" description="Listens for XenForo_ControllerPublic_Post class"/>
+    <listener event_id="template_create" execute_order="10" callback_class="Xenofox_AnonymousPosting_Listener_TemplateCreate" callback_method="template_create2" active="1" description=""/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <optiongroups>
+    <group group_id="XenofoxAnonymousPostingOptions" display_order="1" debug_only="0"/>
+    <option option_id="XenofoxAnonymousPostingUserId" edit_format="textbox" data_type="unsigned_integer" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="XenofoxAnonymousPostingOptions" display_order="1"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups/>
+    <permissions>
+      <permission permission_group_id="forum" permission_id="XenofoxPostAnonReply" permission_type="flag" depend_permission_id="postReply" default_value="unset" interface_group_id="forumPermissions" display_order="10"/>
+      <permission permission_group_id="forum" permission_id="XenofoxPostAnonThread" permission_type="flag" depend_permission_id="postThread" default_value="unset" interface_group_id="forumPermissions" display_order="9"/>
+      <permission permission_group_id="forum" permission_id="XenofoxViewAnonymous" permission_type="flag" default_value="unset" interface_group_id="forumModeratorPermissions" display_order="1"/>
+    </permissions>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="option_group_XenofoxAnonymousPostingOptions" global_cache="0" version_id="1" version_string="0.1"><![CDATA[Anonymous Posting]]></phrase>
+    <phrase title="option_group_XenofoxAnonymousPostingOptions_description" global_cache="0" version_id="1" version_string="0.1"><![CDATA[]]></phrase>
+    <phrase title="option_XenofoxAnonymousPostingUserId" global_cache="0" version_id="1" version_string="0.1"><![CDATA[User Id]]></phrase>
+    <phrase title="option_XenofoxAnonymousPostingUserId_explain" global_cache="0" version_id="1" version_string="0.1"><![CDATA[The User Id of the User you wish to use for Anonymous Posting.]]></phrase>
+    <phrase title="permission_forum_XenofoxPostAnonReply" global_cache="0" version_id="1" version_string="0.1"><![CDATA[Post replies anonymously]]></phrase>
+    <phrase title="permission_forum_XenofoxPostAnonThread" global_cache="0" version_id="1" version_string="0.1"><![CDATA[Post new thread anonymously]]></phrase>
+    <phrase title="permission_forum_XenofoxViewAnonymous" global_cache="0" version_id="1" version_string="0.1"><![CDATA[View Anonymous Posters]]></phrase>
+    <phrase title="XenofoxAnonymous" global_cache="1" version_id="1" version_string="0.1"><![CDATA[Anonymous]]></phrase>
+    <phrase title="xenofox_anon_poster_for_post" global_cache="0" version_id="1" version_string="0.1"><![CDATA[IP address information for post #{number}]]></phrase>
+    <phrase title="xenofox_content_username" global_cache="0" version_id="1" version_string="0.1"><![CDATA[Poster Username]]></phrase>
+    <phrase title="xenofox_create_thread_anonymously" global_cache="0" version_id="1" version_string="0.1"><![CDATA[Create Thread Anonymously]]></phrase>
+    <phrase title="xenofox_not_an_anonymous_post" global_cache="0" version_id="1" version_string="0.1"><![CDATA[This post was not posted anonymously.]]></phrase>
+    <phrase title="xenofox_reply_to_thread_anonymously" global_cache="0" version_id="1" version_string="0.1"><![CDATA[Reply Anonymously]]></phrase>
+  </phrases>
+  <route_prefixes/>
+  <style_properties/>
+  <templates>
+    <template title="xenofox_expose_anonymous" version_id="1" version_string="0.1"><![CDATA[<xen:require css="content_ip.css" />
+
+<xen:title>{xen:phrase xenofox_anon_poster_for_post,
+	'number={xen:calc "{$post.position} + 1"}'}</xen:title>
+
+<xen:navigation>
+	<xen:breadcrumb source="$nodeBreadCrumbs" />
+	<xen:breadcrumb href="{xen:link posts, $post}">{$thread.title}</xen:breadcrumb>
+</xen:navigation>
+
+<div class="section">
+	<h3 class="subHeading">{xen:phrase thread}: {$thread.title}</h3>
+
+<div>
+	<table class="ipInfo">
+	<tr>
+		<th class="primaryContent">{xen:phrase xenofox_content_username}</th>
+		<td class="secondaryContent"><span class="ip">{$logInfo.username}</span></td>
+	</tr>
+	</table>
+	
+	<div class="sectionFooter overlayOnly"><a class="button primary OverlayCloser">{xen:phrase close}</a></div>
+</div>
+</div>]]></template>
+  </templates>
+</addon>
